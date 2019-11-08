@@ -1,5 +1,7 @@
 package trigan.samples.matrix;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public interface Matrix<T> {
@@ -28,6 +30,12 @@ public interface Matrix<T> {
      * @param parallel: set to TRUE to perform parallel computation
      */
     default void putProductOf(Matrix<T> left, Matrix<T> right, boolean parallel) {
+        List<Vector<T>> leftRows = IntStream.range(0, left.getHeight())
+                .mapToObj(left::getRow).collect(Collectors.toList());
+
+        List<Vector<T>> rightColumns = IntStream.range(0, right.getWidth())
+                .mapToObj(right::getColumn).collect(Collectors.toList());
+
         IntStream cellIndices = IntStream.range(0, left.getHeight() * right.getWidth());
 
         /*
@@ -44,7 +52,7 @@ public interface Matrix<T> {
                 .forEach(cellIndex -> {
                     int i = cellIndex / left.getHeight();
                     int j = cellIndex % left.getHeight();
-                    T val = left.getRow(i).getScalarProduct(right.getColumn(j));
+                    T val = leftRows.get(i).getScalarProduct(rightColumns.get(j));
                     set(i, j, val);
                 });
     }
