@@ -40,13 +40,11 @@ public interface Matrix<T> {
 
         /*
             I am aware of the Stream API limitation that forces all parallel computations to run on the common ForkJoinPool.
-            And I know about the problems it creates.
+            And I know about the problems it could possibly create.
             But for the sake of simplicity and brevity in this test task I decided to ignore this fact.
 
-            In production code I'd obviously use https://github.com/pivovarit/parallel-collectors
-            It won't affect the API much. All what we need is to pass an Executor instance to this method instead of the "parallel flag".
-            And for the sequential multiplication we could pass a default Executor that works over the current thread.
-            Like this one: https://stackoverflow.com/a/6583868/1456045
+            In production code one could use https://github.com/pivovarit/parallel-collectors, or other similar approaches.
+            It won't affect the API much. All what we'll need is to pass an Executor instance.
          */
         (parallel ? cellIndices.parallel() : cellIndices.sequential())
                 .forEach(cellIndex -> {
