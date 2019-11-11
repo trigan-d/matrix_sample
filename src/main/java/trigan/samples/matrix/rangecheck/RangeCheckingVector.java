@@ -36,6 +36,11 @@ public class RangeCheckingVector<T> implements Vector<T> {
         else return vector.getScalarProduct(other);
     }
 
+    @Override
+    public String toString() {
+        return vector.toString();
+    }
+
     private void checkIndex(int i) {
         if (i < 0) throw new IndexOutOfBoundsException(i + " < 0");
         else if (i >= getSize()) throw new IndexOutOfBoundsException(i + " > " + getSize());

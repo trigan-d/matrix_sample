@@ -61,6 +61,11 @@ public class RangeCheckingMatrix<T> implements Matrix<T> {
         }
     }
 
+    @Override
+    public String toString() {
+        return matrix.toString();
+    }
+
     private void checkRowIndex(int i) {
         if (i < 0) throw new IndexOutOfBoundsException(i + " < 0");
         else if (i >= getHeight()) throw new IndexOutOfBoundsException(i + " > " + getHeight());
